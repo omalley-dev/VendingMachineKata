@@ -57,4 +57,33 @@ internal class VendingMachineTest {
 
     assertEquals(expected, subject.balance)
   }
+
+  @Test
+  fun `display value returns INSERT COIN when no coins have been inserted`() {
+    val expected = "INSERT COIN"
+
+    assertEquals(expected, subject.display)
+  }
+
+  @Test
+  fun `display value returns $0,25 when a quarter is inserted`() {
+    val expected = "$0.25"
+
+    subject.acceptCoin(CoinTypes.QUARTER)
+
+    assertEquals(expected, subject.display)
+  }
+
+  @Test
+  fun `display value returns $1,25 when a 5 quarters are inserted`() {
+    val expected = "$1.25"
+
+    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(CoinTypes.QUARTER)
+
+    assertEquals(expected, subject.display)
+  }
 }
