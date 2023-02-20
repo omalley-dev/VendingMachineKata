@@ -3,24 +3,16 @@ interface ICoin {
 }
 
 enum class CoinTypes : ICoin {
-  COIN1 {
-    override fun getValueInCents(): Int {
-      TODO("Not yet implemented")
-    }
+  PENNY {
+    override fun getValueInCents() = 1
   },
-  COIN2 {
-    override fun getValueInCents(): Int {
-      TODO("Not yet implemented")
-    }
+  NICKLE {
+    override fun getValueInCents() = 5
   },
-  COIN3 {
-    override fun getValueInCents(): Int {
-      TODO("Not yet implemented")
-    }
+  DIME {
+    override fun getValueInCents() = 10
   },
-  COIN4 {
-    override fun getValueInCents(): Int {
-      TODO("Not yet implemented")
-    }
+  QUARTER {
+    override fun getValueInCents() = 25
   }
 }
