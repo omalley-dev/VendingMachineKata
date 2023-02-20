@@ -6,6 +6,9 @@ class VendingMachine {
   val display: String
     get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
 
+  val coinReturn: List<CoinTypes>
+    get() = listOf()
+
   fun acceptCoin(coin: CoinTypes) {
     addCoin(coin)
   }

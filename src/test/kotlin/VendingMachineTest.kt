@@ -86,4 +86,13 @@ internal class VendingMachineTest {
 
     assertEquals(expected, subject.display)
   }
+
+  @Test
+  fun `when penny is inserted it is returned to the user via the coin return slot`() {
+    val expected = listOf(CoinTypes.PENNY)
+
+    subject.acceptCoin(CoinTypes.PENNY)
+
+    assertEquals(expected, subject.coinReturn)
+  }
 }
