@@ -6,8 +6,7 @@ class VendingMachine {
   val display: String
     get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
 
-  val coinReturn: List<CoinTypes>
-    get() = listOf()
+  var coinReturn: ArrayList<CoinTypes> = arrayListOf()
 
   fun acceptCoin(coin: CoinTypes) {
     addCoin(coin)
@@ -20,7 +19,11 @@ class VendingMachine {
   }
 
   private fun addCoin(coin: CoinTypes) {
-    if (isValidCoin(coin)) coins.add(coin)
+    if (isValidCoin(coin)) coins.add(coin) else returnInvalidCoin(coin)
+  }
+
+  private fun returnInvalidCoin(coin: CoinTypes) {
+    coinReturn.add(coin)
   }
 
   private fun isValidCoin(coin: CoinTypes): Boolean {
