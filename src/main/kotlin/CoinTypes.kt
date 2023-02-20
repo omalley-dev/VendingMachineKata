@@ -1,7 +1,3 @@
-interface ICoin {
-  fun getValueInCents(): Int
-}
-
 enum class CoinTypes : ICoin {
   PENNY {
     override fun getValueInCents() = 1

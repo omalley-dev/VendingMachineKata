@@ -1,5 +1,6 @@
 class VendingMachine {
-    fun VendingMachine() {
-        
-    }
+  var coinValue: Int = 0
+
+  fun acceptCoin(coin: CoinTypes) {
+  }
 }
