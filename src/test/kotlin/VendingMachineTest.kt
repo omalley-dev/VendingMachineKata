@@ -3,7 +3,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class VendingMachineTest {
-
   lateinit var subject: VendingMachine
 
   @BeforeEach
@@ -12,12 +11,12 @@ internal class VendingMachineTest {
   }
 
   @Test
-  fun `coin value increases by 1 when penny is inserted`() {
-    val expected = 1
+  fun `coin value does not increases when penny is inserted`() {
+    val expected = 0
 
     subject.acceptCoin(CoinTypes.PENNY)
 
-    assertEquals(expected, subject.coinValue)
+    assertEquals(expected, subject.balance)
   }
 
   @Test
@@ -26,7 +25,7 @@ internal class VendingMachineTest {
 
     subject.acceptCoin(CoinTypes.NICKLE)
 
-    assertEquals(expected, subject.coinValue)
+    assertEquals(expected, subject.balance)
   }
 
   @Test
@@ -35,7 +34,7 @@ internal class VendingMachineTest {
 
     subject.acceptCoin(CoinTypes.DIME)
 
-    assertEquals(expected, subject.coinValue)
+    assertEquals(expected, subject.balance)
   }
 
   @Test
@@ -44,6 +43,18 @@ internal class VendingMachineTest {
 
     subject.acceptCoin(CoinTypes.QUARTER)
 
-    assertEquals(expected, subject.coinValue)
+    assertEquals(expected, subject.balance)
+  }
+
+  @Test
+  fun `coin value increases to 50 cents when given 1 quarter, 2 dimes and 1 nickle`() {
+    val expected = 50
+
+    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(CoinTypes.DIME)
+    subject.acceptCoin(CoinTypes.DIME)
+    subject.acceptCoin(CoinTypes.NICKLE)
+
+    assertEquals(expected, subject.balance)
   }
 }

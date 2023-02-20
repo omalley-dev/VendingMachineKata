@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class MainKtTest {
-
     @BeforeEach
     fun setUp() {
     }
