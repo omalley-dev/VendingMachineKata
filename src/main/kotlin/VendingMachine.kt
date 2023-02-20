@@ -4,14 +4,16 @@ class VendingMachine {
     get() = coins.sumOf { it.getValueInCents() }
 
   val display: String
-    get() = if (coins.isNotEmpty()) formatBalanceDisplay() else ""
+    get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
 
   fun acceptCoin(coin: CoinTypes) {
     addCoin(coin)
   }
 
   private fun formatBalanceDisplay(): String {
-    return ""
+    val dollars = balance / 100
+    val cents = balance % 100
+    return "$$dollars.$cents"
   }
 
   private fun addCoin(coin: CoinTypes) {
