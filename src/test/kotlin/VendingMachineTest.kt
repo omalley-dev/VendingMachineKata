@@ -15,7 +15,7 @@ internal class VendingMachineTest {
   fun `coin value does not increases when penny is inserted`() {
     val expected = 0
 
-    subject.acceptCoin(CoinTypes.PENNY)
+    subject.acceptCoin(Coin.PENNY)
 
     assertEquals(expected, subject.balance)
   }
@@ -24,7 +24,7 @@ internal class VendingMachineTest {
   fun `coin value increases by 5 when nickle is inserted`() {
     val expected = 5
 
-    subject.acceptCoin(CoinTypes.NICKLE)
+    subject.acceptCoin(Coin.NICKLE)
 
     assertEquals(expected, subject.balance)
   }
@@ -33,7 +33,7 @@ internal class VendingMachineTest {
   fun `coin value increases by 10 when dime is inserted`() {
     val expected = 10
 
-    subject.acceptCoin(CoinTypes.DIME)
+    subject.acceptCoin(Coin.DIME)
 
     assertEquals(expected, subject.balance)
   }
@@ -42,7 +42,7 @@ internal class VendingMachineTest {
   fun `coin value increases by 25 when quarter is inserted`() {
     val expected = 25
 
-    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER)
 
     assertEquals(expected, subject.balance)
   }
@@ -51,7 +51,7 @@ internal class VendingMachineTest {
   fun `coin value increases to 50 cents when given 1 quarter, 2 dimes and 1 nickle`() {
     val expected = 50
 
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.DIME, CoinTypes.NICKLE)
+    subject.acceptCoin(Coin.QUARTER, Coin.DIME, Coin.DIME, Coin.NICKLE)
 
     assertEquals(expected, subject.balance)
   }
@@ -67,7 +67,7 @@ internal class VendingMachineTest {
   fun `display value returns $0,25 when a quarter is inserted`() {
     val expected = "$0.25"
 
-    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER)
 
     assertEquals(expected, subject.display)
   }
@@ -77,11 +77,11 @@ internal class VendingMachineTest {
     val expected = "$1.25"
 
     subject.acceptCoin(
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
     )
 
     assertEquals(expected, subject.display)
@@ -89,25 +89,25 @@ internal class VendingMachineTest {
 
   @Test
   fun `when penny is inserted it is returned to the user via the coin return slot`() {
-    val expected = listOf(CoinTypes.PENNY)
+    val expected = listOf(Coin.PENNY)
 
-    subject.acceptCoin(CoinTypes.PENNY)
+    subject.acceptCoin(Coin.PENNY)
 
     assertEquals(expected, subject.coinReturn)
   }
 
   @Test
   fun `when a dime and two pennies are inserted the two pennies are returned to the user via the coin return slot`() {
-    val expected = listOf(CoinTypes.PENNY, CoinTypes.PENNY)
+    val expected = listOf(Coin.PENNY, Coin.PENNY)
 
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.PENNY, CoinTypes.PENNY)
+    subject.acceptCoin(Coin.QUARTER, Coin.PENNY, Coin.PENNY)
 
     assertEquals(expected, subject.coinReturn)
   }
 
   @Test
   fun `when cola is selected with enough money inserted it is dispensed`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER, Coin.QUARTER, Coin.QUARTER)
     val expected = Product.COLA
 
     val actual = subject.selectProduct(Product.COLA)
@@ -117,7 +117,7 @@ internal class VendingMachineTest {
 
   @Test
   fun `when chips is selected with enough money inserted it is dispensed`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER)
     val expected = Product.CHIPS
 
     val actual = subject.selectProduct(Product.CHIPS)
@@ -127,7 +127,7 @@ internal class VendingMachineTest {
 
   @Test
   fun `when candy is selected with enough money inserted it is dispensed`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER, Coin.DIME, Coin.NICKLE)
     val expected = Product.CANDY
 
     val actual = subject.selectProduct(Product.CANDY)
@@ -144,7 +144,7 @@ internal class VendingMachineTest {
 
   @Test
   fun `when product is vended balance is reset`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER)
     val expected = 0
 
     subject.selectProduct(Product.CHIPS)
@@ -154,7 +154,7 @@ internal class VendingMachineTest {
 
   @Test
   fun `when product is vended a thank you message is displayed`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER)
     val expected = "THANK YOU"
 
     subject.selectProduct(Product.CHIPS)
@@ -164,8 +164,8 @@ internal class VendingMachineTest {
 
   @Test
   fun `when candy is selected with balance at 75 cents then 1 dime should be returned`() {
-    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER)
-    val expected = listOf(CoinTypes.DIME)
+    subject.acceptCoin(Coin.QUARTER, Coin.QUARTER, Coin.QUARTER)
+    val expected = listOf(Coin.DIME)
 
     subject.selectProduct(Product.CANDY)
 
@@ -175,13 +175,13 @@ internal class VendingMachineTest {
   @Test
   fun `when candy is selected with balance at 115 cents then 2 quarters should be returned`() {
     subject.acceptCoin(
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.QUARTER,
-        CoinTypes.DIME,
-        CoinTypes.NICKLE)
-    val expected = listOf(CoinTypes.QUARTER, CoinTypes.QUARTER)
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.QUARTER,
+        Coin.DIME,
+        Coin.NICKLE)
+    val expected = listOf(Coin.QUARTER, Coin.QUARTER)
 
     subject.selectProduct(Product.CANDY)
 
@@ -191,15 +191,15 @@ internal class VendingMachineTest {
   @Test
   fun `when chips are selected with balance at 90 cents then 1 quarter, 1 dime, and 1 nickle should be returned`() {
     subject.acceptCoin(
-        CoinTypes.QUARTER,
-        CoinTypes.NICKLE,
-        CoinTypes.DIME,
-        CoinTypes.DIME,
-        CoinTypes.DIME,
-        CoinTypes.DIME,
-        CoinTypes.DIME,
-        CoinTypes.DIME)
-    val expected = listOf(CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
+        Coin.QUARTER,
+        Coin.NICKLE,
+        Coin.DIME,
+        Coin.DIME,
+        Coin.DIME,
+        Coin.DIME,
+        Coin.DIME,
+        Coin.DIME)
+    val expected = listOf(Coin.QUARTER, Coin.DIME, Coin.NICKLE)
 
     subject.selectProduct(Product.CHIPS)
 
@@ -209,10 +209,11 @@ internal class VendingMachineTest {
   @Test
   fun `when return coins is pressed the coins entered by the customer are returned`() {
     subject.acceptCoin(
-      CoinTypes.QUARTER,
-      CoinTypes.DIME,
-      CoinTypes.NICKLE)
-    val expected = listOf(CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
+      Coin.QUARTER,
+      Coin.DIME,
+      Coin.NICKLE)
+    val expected = listOf(Coin.QUARTER, Coin.DIME, Coin.NICKLE)
+
 
     subject.returnCoins()
 

@@ -1,3 +1,7 @@
+interface IProduct {
+  fun getValueInCents(): Int
+}
+
 enum class Product : IProduct {
   COLA {
     override fun getValueInCents() = 100

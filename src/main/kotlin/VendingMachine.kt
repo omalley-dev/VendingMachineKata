@@ -1,5 +1,5 @@
 class VendingMachine {
-  private var coins: ArrayList<CoinTypes> = arrayListOf()
+  private var coins: ArrayList<Coin> = arrayListOf()
   private val inventory: Map<Product, Int> =
       mapOf(Pair(Product.COLA, 1), Pair(Product.CHIPS, 1), Pair(Product.CANDY, 1))
   private var justVended = false
@@ -13,9 +13,9 @@ class VendingMachine {
       field = text
     }
 
-  var coinReturn: ArrayList<CoinTypes> = arrayListOf()
+  var coinReturn: ArrayList<Coin> = arrayListOf()
 
-  fun acceptCoin(vararg coinsToInsert: CoinTypes) {
+  fun acceptCoin(vararg coinsToInsert: Coin) {
     for (coin in coinsToInsert) {
       if (isValidCoin(coin)) coins.add(coin) else returnInvalidCoin(coin)
     }
@@ -58,13 +58,13 @@ class VendingMachine {
     }
   }
 
-  private fun getLargestPossibleCoin(delta: Int): CoinTypes {
-    val coin: CoinTypes =
+  private fun getLargestPossibleCoin(delta: Int): Coin {
+    val coin: Coin =
         when (true) {
-          (delta >= 25) -> CoinTypes.QUARTER
-          (delta >= 10) -> CoinTypes.DIME
-          (delta >= 5) -> CoinTypes.NICKLE
-          else -> CoinTypes.PENNY
+          (delta >= 25) -> Coin.QUARTER
+          (delta >= 10) -> Coin.DIME
+          (delta >= 5) -> Coin.NICKLE
+          else -> Coin.PENNY
         }
     return coin
   }
@@ -79,11 +79,11 @@ class VendingMachine {
     return "$$dollars.$cents"
   }
 
-  private fun returnInvalidCoin(coin: CoinTypes) {
+  private fun returnInvalidCoin(coin: Coin) {
     coinReturn.add(coin)
   }
 
-  private fun isValidCoin(coin: CoinTypes): Boolean {
-    return coin.name != CoinTypes.PENNY.name
+  private fun isValidCoin(coin: Coin): Boolean {
+    return coin.name != Coin.PENNY.name
   }
 }
