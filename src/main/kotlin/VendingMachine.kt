@@ -26,7 +26,8 @@ class VendingMachine {
   }
 
   fun returnCoins() {
-
+    coinReturn.addAll(coins)
+    coins = arrayListOf()
   }
 
   private fun getDisplayMessage(): String {
