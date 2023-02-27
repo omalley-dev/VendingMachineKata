@@ -103,4 +103,34 @@ internal class VendingMachineTest {
 
     assertEquals(expected, subject.coinReturn)
   }
+
+  @Test
+  fun `when cola is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = Product.COLA
+
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when chips is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = Product.CHIPS
+
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when candy is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
+    val expected = Product.CANDY
+
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertEquals(expected, actual)
+  }
 }

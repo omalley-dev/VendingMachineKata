@@ -1,7 +1,11 @@
 class VendingMachine {
   private val coins: ArrayList<CoinTypes> = arrayListOf()
+  private val inventory: Map<Product, Int> =
+      mapOf(Pair(Product.COLA, 1), Pair(Product.CHIPS, 1), Pair(Product.CANDY, 1))
+
   val balance: Int
     get() = coins.sumOf { it.getValueInCents() }
+
 
   val display: String
     get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
@@ -14,7 +18,9 @@ class VendingMachine {
     }
   }
 
-  fun selectProduct(product: Product) {}
+   fun selectProduct(product: Product): Product? {
+     return null
+   }
 
   private fun formatBalanceDisplay(): String {
     val dollars = balance / 100
