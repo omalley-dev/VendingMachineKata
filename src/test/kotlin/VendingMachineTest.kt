@@ -214,6 +214,7 @@ internal class VendingMachineTest {
       Coin.NICKLE)
     val expected = listOf(Coin.QUARTER, Coin.DIME, Coin.NICKLE)
 
+
     subject.returnCoins()
 
     assertEquals(expected, subject.coinReturn)
