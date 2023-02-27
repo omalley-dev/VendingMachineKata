@@ -39,7 +39,12 @@ class VendingMachine {
   private fun vend(product: Product): Product {
     coins = arrayListOf()
     justVended = true
+    makeChange()
     return product
+  }
+
+  private fun makeChange() {
+    coinReturn.add(CoinTypes.DIME)
   }
 
   private fun canAffordProduct(product: Product): Boolean {
