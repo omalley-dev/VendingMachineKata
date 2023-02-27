@@ -37,14 +37,31 @@ class VendingMachine {
   }
 
   private fun vend(product: Product): Product {
+    makeChange(product)
     coins = arrayListOf()
     justVended = true
-    makeChange()
     return product
   }
 
-  private fun makeChange() {
-    coinReturn.add(CoinTypes.DIME)
+  private fun makeChange(product: Product) {
+    var delta = balance - product.getValueInCents()
+
+    while (delta > 0) {
+      val coin = getLargestPossibleCoin(delta)
+      coinReturn.add(coin)
+      delta -= coin.getValueInCents()
+    }
+  }
+
+  private fun getLargestPossibleCoin(delta: Int): CoinTypes {
+    val coin: CoinTypes
+    when(true) {
+      (delta >= 25) -> coin = CoinTypes.QUARTER
+      (delta >= 10) -> coin = CoinTypes.DIME
+      (delta >= 5) -> coin = CoinTypes.NICKLE
+      else -> {coin = CoinTypes.PENNY}
+    }
+    return coin
   }
 
   private fun canAffordProduct(product: Product): Boolean {
