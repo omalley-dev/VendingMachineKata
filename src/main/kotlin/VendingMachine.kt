@@ -9,17 +9,13 @@ class VendingMachine {
   var coinReturn: ArrayList<CoinTypes> = arrayListOf()
 
   fun acceptCoin(coin: CoinTypes) {
-    addCoin(coin)
+    if (isValidCoin(coin)) coins.add(coin) else returnInvalidCoin(coin)
   }
 
   private fun formatBalanceDisplay(): String {
     val dollars = balance / 100
     val cents = balance % 100
     return "$$dollars.$cents"
-  }
-
-  private fun addCoin(coin: CoinTypes) {
-    if (isValidCoin(coin)) coins.add(coin) else returnInvalidCoin(coin)
   }
 
   private fun returnInvalidCoin(coin: CoinTypes) {
