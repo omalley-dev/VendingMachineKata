@@ -1,4 +1,8 @@
-enum class CoinTypes : ICoin {
+interface ICoin {
+  fun getValueInCents(): Int
+}
+
+enum class Coin : ICoin {
   PENNY {
     override fun getValueInCents() = 1
   },
