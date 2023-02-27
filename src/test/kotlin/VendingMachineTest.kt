@@ -161,4 +161,14 @@ internal class VendingMachineTest {
 
     assertEquals(expected, subject.display)
   }
+
+  @Test
+  fun `when candy is selected with balance at 75 cents then 1 dime should be returned`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = listOf(CoinTypes.DIME)
+
+    subject.selectProduct(Product.CANDY)
+
+    assertEquals(expected, subject.coinReturn)
+  }
 }
