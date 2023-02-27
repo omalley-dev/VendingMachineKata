@@ -54,14 +54,13 @@ class VendingMachine {
   }
 
   private fun getLargestPossibleCoin(delta: Int): CoinTypes {
-    val coin: CoinTypes = when(true) {
-      (delta >= 25) -> CoinTypes.QUARTER
-      (delta >= 10) -> CoinTypes.DIME
-      (delta >= 5) -> CoinTypes.NICKLE
-      else -> {
-        CoinTypes.PENNY
-      }
-    }
+    val coin: CoinTypes =
+        when (true) {
+          (delta >= 25) -> CoinTypes.QUARTER
+          (delta >= 10) -> CoinTypes.DIME
+          (delta >= 5) -> CoinTypes.NICKLE
+          else -> CoinTypes.PENNY
+        }
     return coin
   }
 
