@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -132,5 +133,12 @@ internal class VendingMachineTest {
     val actual = subject.selectProduct(Product.CANDY)
 
     assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when cola is selected with insufficient money inserted no product is dispensed`() {
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertNull(actual)
   }
 }
