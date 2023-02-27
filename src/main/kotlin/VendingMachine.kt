@@ -1,13 +1,14 @@
 class VendingMachine {
-  private val coins: ArrayList<CoinTypes> = arrayListOf()
+  private var coins: ArrayList<CoinTypes> = arrayListOf()
   private val inventory: Map<Product, Int> =
       mapOf(Pair(Product.COLA, 1), Pair(Product.CHIPS, 1), Pair(Product.CANDY, 1))
+  private var justVended = false
 
   val balance: Int
     get() = coins.sumOf { it.getValueInCents() }
 
   var display: String = ""
-    get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
+    get() = getDisplayMessage()
     set(text) {
       field = text
     }
@@ -21,7 +22,24 @@ class VendingMachine {
   }
 
   fun selectProduct(product: Product): Product? {
-    return if (canAffordProduct(product)) product else null
+    return if (canAffordProduct(product)) vend(product) else null
+  }
+
+  private fun getDisplayMessage(): String {
+    return if (coins.isNotEmpty()) {
+      formatBalanceDisplay()
+    } else if (justVended) {
+      justVended = false
+      "THANK YOU"
+    } else {
+      "INSERT COIN"
+    }
+  }
+
+  private fun vend(product: Product): Product {
+    coins = arrayListOf()
+    justVended = true
+    return product
   }
 
   private fun canAffordProduct(product: Product): Boolean {
