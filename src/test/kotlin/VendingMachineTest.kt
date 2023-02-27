@@ -130,6 +130,7 @@ internal class VendingMachineTest {
     subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
     val expected = Product.CANDY
 
+
     val actual = subject.selectProduct(Product.CANDY)
 
     assertEquals(expected, actual)
@@ -140,5 +141,35 @@ internal class VendingMachineTest {
     val actual = subject.selectProduct(Product.COLA)
 
     assertNull(actual)
+  }
+
+  @Test
+  fun `when product is vended balance is reset`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = 0
+
+    subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, subject.balance)
+  }
+
+  @Test
+  fun `when product is vended a thank you message is displayed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = "THANK YOU"
+
+    subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, subject.display)
+  }
+
+  @Test
+  fun `when product is vended with insufficient funds a message telling user to insert coin is displayed`() {
+    subject.acceptCoin(CoinTypes.QUARTER)
+    val expected = "INSERT COIN"
+
+    subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, subject.display)
   }
 }
