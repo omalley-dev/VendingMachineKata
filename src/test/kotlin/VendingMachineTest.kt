@@ -218,4 +218,13 @@ internal class VendingMachineTest {
 
     assertEquals(expected, subject.coinReturn)
   }
+
+  @Test
+  fun `when return coins is pressed the display should say insert coin`() {
+    val expected = "INSERT COIN"
+
+    subject.returnCoins()
+
+    assertEquals(expected, subject.display)
+  }
 }
