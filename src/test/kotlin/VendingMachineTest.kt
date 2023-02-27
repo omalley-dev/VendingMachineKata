@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -50,10 +51,7 @@ internal class VendingMachineTest {
   fun `coin value increases to 50 cents when given 1 quarter, 2 dimes and 1 nickle`() {
     val expected = 50
 
-    subject.acceptCoin(CoinTypes.QUARTER)
-    subject.acceptCoin(CoinTypes.DIME)
-    subject.acceptCoin(CoinTypes.DIME)
-    subject.acceptCoin(CoinTypes.NICKLE)
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.DIME, CoinTypes.NICKLE)
 
     assertEquals(expected, subject.balance)
   }
@@ -78,11 +76,13 @@ internal class VendingMachineTest {
   fun `display value returns $1,25 when a 5 quarters are inserted`() {
     val expected = "$1.25"
 
-    subject.acceptCoin(CoinTypes.QUARTER)
-    subject.acceptCoin(CoinTypes.QUARTER)
-    subject.acceptCoin(CoinTypes.QUARTER)
-    subject.acceptCoin(CoinTypes.QUARTER)
-    subject.acceptCoin(CoinTypes.QUARTER)
+    subject.acceptCoin(
+        CoinTypes.QUARTER,
+        CoinTypes.QUARTER,
+        CoinTypes.QUARTER,
+        CoinTypes.QUARTER,
+        CoinTypes.QUARTER,
+    )
 
     assertEquals(expected, subject.display)
   }
@@ -94,5 +94,71 @@ internal class VendingMachineTest {
     subject.acceptCoin(CoinTypes.PENNY)
 
     assertEquals(expected, subject.coinReturn)
+  }
+
+  @Test
+  fun `when a dime and two pennies are inserted the two pennies are returned to the user via the coin return slot`() {
+    val expected = listOf(CoinTypes.PENNY, CoinTypes.PENNY)
+
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.PENNY, CoinTypes.PENNY)
+
+    assertEquals(expected, subject.coinReturn)
+  }
+
+  @Test
+  fun `when cola is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = Product.COLA
+
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when chips is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = Product.CHIPS
+
+    val actual = subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when candy is selected with enough money inserted it is dispensed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
+    val expected = Product.CANDY
+
+    val actual = subject.selectProduct(Product.CANDY)
+
+    assertEquals(expected, actual)
+  }
+
+  @Test
+  fun `when cola is selected with insufficient money inserted no product is dispensed`() {
+    val actual = subject.selectProduct(Product.COLA)
+
+    assertNull(actual)
+  }
+
+  @Test
+  fun `when product is vended balance is reset`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = 0
+
+    subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, subject.balance)
+  }
+
+  @Test
+  fun `when product is vended a thank you message is displayed`() {
+    subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
+    val expected = "THANK YOU"
+
+    subject.selectProduct(Product.CHIPS)
+
+    assertEquals(expected, subject.display)
   }
 }
