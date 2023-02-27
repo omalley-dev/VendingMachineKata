@@ -6,9 +6,11 @@ class VendingMachine {
   val balance: Int
     get() = coins.sumOf { it.getValueInCents() }
 
-
-  val display: String
+  var display: String = ""
     get() = if (coins.isNotEmpty()) formatBalanceDisplay() else "INSERT COIN"
+    set(text) {
+      field = text
+    }
 
   var coinReturn: ArrayList<CoinTypes> = arrayListOf()
 
@@ -18,9 +20,13 @@ class VendingMachine {
     }
   }
 
-   fun selectProduct(product: Product): Product? {
-     return null
-   }
+  fun selectProduct(product: Product): Product? {
+    return if (canAffordProduct(product)) product else null
+  }
+
+  private fun canAffordProduct(product: Product): Boolean {
+    return balance >= product.getValueInCents()
+  }
 
   private fun formatBalanceDisplay(): String {
     val dollars = balance / 100

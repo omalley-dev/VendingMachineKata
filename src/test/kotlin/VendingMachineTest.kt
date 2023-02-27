@@ -119,7 +119,7 @@ internal class VendingMachineTest {
     subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER)
     val expected = Product.CHIPS
 
-    val actual = subject.selectProduct(Product.COLA)
+    val actual = subject.selectProduct(Product.CHIPS)
 
     assertEquals(expected, actual)
   }
@@ -129,7 +129,7 @@ internal class VendingMachineTest {
     subject.acceptCoin(CoinTypes.QUARTER, CoinTypes.QUARTER, CoinTypes.DIME, CoinTypes.NICKLE)
     val expected = Product.CANDY
 
-    val actual = subject.selectProduct(Product.COLA)
+    val actual = subject.selectProduct(Product.CANDY)
 
     assertEquals(expected, actual)
   }
