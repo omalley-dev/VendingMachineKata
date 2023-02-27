@@ -25,6 +25,11 @@ class VendingMachine {
     return if (canAffordProduct(product)) vend(product) else null
   }
 
+  fun returnCoins() {
+    coinReturn.addAll(coins)
+    coins = arrayListOf()
+  }
+
   private fun getDisplayMessage(): String {
     return if (coins.isNotEmpty()) {
       formatBalanceDisplay()
